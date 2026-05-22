@@ -1,25 +1,35 @@
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { Streamdown } from 'streamdown';
+import { useState } from 'react';
+import Envelope from '@/components/Envelope';
+import CountdownTimer from '@/components/CountdownTimer';
+import HeroSection from '@/components/HeroSection';
+import VenueSection from '@/components/VenueSection';
+import StorySection from '@/components/StorySection';
+import GallerySection from '@/components/GallerySection';
+import FooterSection from '@/components/FooterSection';
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Best Practices, Design Guide and Common Pitfalls
- */
 export default function Home() {
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
+  const [envelopeOpened, setEnvelopeOpened] = useState(false);
+  const [couplePhotoUrl] = useState<string | undefined>(
+    '/manus-storage/ac7b3f41-e0db-4e00-a415-4d913332cd6b_0ad1decd.jpg'
+  );
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
+    <div className=\"min-h-screen bg-white\">
+      {!envelopeOpened && (
+        <Envelope onOpen={() => setEnvelopeOpened(true)} />
+      )}
+
+      {envelopeOpened && (
+        <>
+          <HeroSection couplePhotoUrl={couplePhotoUrl} />
+          <CountdownTimer />
+          <VenueSection />
+          <StorySection />
+          <GallerySection />
+          <FooterSection />
+        </>
+      )}
     </div>
   );
 }
+
