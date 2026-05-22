@@ -1,1 +1,130 @@
-import { useState, useEffect } from 'react';\nimport { motion } from 'framer-motion';\n\nconst arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];\n\nconst convertToArabic = (num: number): string => {\n  return String(num)\n    .split('')\n    .map(digit => arabicNumbers[parseInt(digit)])\n    .join('');\n};\n\ninterface TimeRemaining {\n  days: number;\n  hours: number;\n  minutes: number;\n  seconds: number;\n}\n\nexport default function CountdownTimer() {\n  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>({\n    days: 0,\n    hours: 0,\n    minutes: 0,\n    seconds: 0,\n  });\n\n  useEffect(() => {\n    const calculateTimeRemaining = () => {\n      const weddingDate = new Date(2026, 1, 6, 0, 0, 0).getTime();\n      const now = new Date().getTime();\n      const difference = weddingDate - now;\n\n      if (difference > 0) {\n        setTimeRemaining({\n          days: Math.floor(difference / (1000 * 60 * 60 * 24)),\n          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),\n          minutes: Math.floor((difference / 1000 / 60) % 60),\n          seconds: Math.floor((difference / 1000) % 60),\n        });\n      }\n    };\n\n    calculateTimeRemaining();\n    const timer = setInterval(calculateTimeRemaining, 1000);\n\n    return () => clearInterval(timer);\n  }, []);\n\n  const TimeUnit = ({ value, label }: { value: number; label: string }) => (\n    <motion.div\n      className=\"flex flex-col items-center\"\n      initial={{ opacity: 0, y: 20 }}\n      whileInView={{ opacity: 1, y: 0 }}\n      transition={{ duration: 0.6 }}\n    >\n      <div className=\"relative\">\n        {/* Gold background circle */}\n        <div className=\"absolute inset-0 bg-accent rounded-lg opacity-10 blur-lg\" />\n        \n        {/* Number container */}\n        <div className=\"relative bg-white border-2 border-accent rounded-lg px-6 py-4 min-w-24\">\n          <motion.div\n            key={value}\n            animate={{ scale: [1, 1.1, 1] }}\n            transition={{ duration: 0.3 }}\n            className=\"text-4xl font-cormorant font-bold text-accent text-center\"\n          >\n            {convertToArabic(value).padStart(2, '٠')}\n          </motion.div>\n        </div>\n      </div>\n      \n      {/* Label */}\n      <p className=\"mt-3 text-sm font-almarai text-muted-foreground text-center\">{label}</p>\n    </motion.div>\n  );\n\n  return (\n    <section className=\"py-16 px-4 bg-gradient-to-b from-white via-white to-secondary/20\">\n      <div className=\"container max-w-4xl mx-auto\">\n        {/* Section title */}\n        <motion.div\n          className=\"text-center mb-12\"\n          initial={{ opacity: 0 }}\n          whileInView={{ opacity: 1 }}\n          transition={{ duration: 0.8 }}\n        >\n          <h2 className=\"text-4xl md:text-5xl font-cormorant font-bold text-accent mb-4\">\n            العد التنازلي\n          </h2>\n          <div className=\"w-24 h-1 bg-gradient-to-r from-transparent via-accent to-transparent mx-auto\" />\n        </motion.div>\n\n        {/* Countdown grid */}\n        <div className=\"grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12\">\n          <TimeUnit value={timeRemaining.days} label=\"يوم\" />\n          <TimeUnit value={timeRemaining.hours} label=\"ساعة\" />\n          <TimeUnit value={timeRemaining.minutes} label=\"دقيقة\" />\n          <TimeUnit value={timeRemaining.seconds} label=\"ثانية\" />\n        </div>\n\n        {/* Decorative divider */}\n        <div className=\"flex items-center justify-center gap-4 mb-8\">\n          <div className=\"flex-1 h-px bg-gradient-to-r from-transparent to-accent opacity-30\" />\n          <div className=\"w-8 h-8 rounded-full border-2 border-accent opacity-40 flex items-center justify-center\">\n            <div className=\"w-2 h-2 rounded-full bg-accent\" />\n          </div>\n          <div className=\"flex-1 h-px bg-gradient-to-l from-transparent to-accent opacity-30\" />\n        </div>\n\n        {/* Wedding date in Arabic */}\n        <motion.div\n          className=\"text-center\"\n          initial={{ opacity: 0 }}\n          whileInView={{ opacity: 1 }}\n          transition={{ duration: 0.8, delay: 0.2 }}\n        >\n          <p className=\"text-lg md:text-xl font-almarai text-foreground mb-2\">\n            السبت، ٦ فبراير ٢٠٢٦\n          </p>\n          <p className=\"text-sm font-almarai text-muted-foreground\">\n            الموافق ١٦ جمادى الثانية ١٤٤٧ هـ\n          </p>\n        </motion.div>\n      </div>\n    </section>\n  );\n}\n
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
+const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+
+const convertToArabic = (num: number): string => {
+  return String(num)
+    .split('')
+    .map(digit => arabicNumbers[parseInt(digit)])
+    .join('');
+};
+
+interface TimeRemaining {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+export default function CountdownTimer() {
+  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const calculateTimeRemaining = () => {
+      const weddingDate = new Date(2026, 1, 6, 0, 0, 0).getTime();
+      const now = new Date().getTime();
+      const difference = weddingDate - now;
+
+      if (difference > 0) {
+        setTimeRemaining({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    };
+
+    calculateTimeRemaining();
+    const timer = setInterval(calculateTimeRemaining, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const TimeUnit = ({ value, label }: { value: number; label: string }) => (
+    <motion.div
+      className="flex flex-col items-center"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <div className="relative">
+        {/* Gold background circle */}
+        <div className="absolute inset-0 bg-accent rounded-lg opacity-10 blur-lg" />
+        
+        {/* Number container */}
+        <div className="relative bg-white border-2 border-accent rounded-lg px-6 py-4 min-w-24">
+          <motion.div
+            key={value}
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 0.3 }}
+            className="text-4xl font-cormorant font-bold text-accent text-center"
+          >
+            {convertToArabic(value).padStart(2, '٠')}
+          </motion.div>
+        </div>
+      </div>
+      
+      {/* Label */}
+      <p className="mt-3 text-sm font-almarai text-muted-foreground text-center">{label}</p>
+    </motion.div>
+  );
+
+  return (
+    <section className="py-16 px-4 bg-gradient-to-b from-white via-white to-secondary/20">
+      <div className="container max-w-4xl mx-auto">
+        {/* Section title */}
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-4xl md:text-5xl font-cormorant font-bold text-accent mb-4">
+            العد التنازلي
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-accent to-transparent mx-auto" />
+        </motion.div>
+
+        {/* Countdown grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
+          <TimeUnit value={timeRemaining.days} label="يوم" />
+          <TimeUnit value={timeRemaining.hours} label="ساعة" />
+          <TimeUnit value={timeRemaining.minutes} label="دقيقة" />
+          <TimeUnit value={timeRemaining.seconds} label="ثانية" />
+        </div>
+
+        {/* Decorative divider */}
+        <div className="flex items-center justify-center gap-4 mb-8">
+          <div className="flex-1 h-px bg-gradient-to-r from-transparent to-accent opacity-30" />
+          <div className="w-8 h-8 rounded-full border-2 border-accent opacity-40 flex items-center justify-center">
+            <div className="w-2 h-2 rounded-full bg-accent" />
+          </div>
+          <div className="flex-1 h-px bg-gradient-to-l from-transparent to-accent opacity-30" />
+        </div>
+
+        {/* Wedding date in Arabic */}
+        <motion.div
+          className="text-center"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <p className="text-lg md:text-xl font-almarai text-foreground mb-2">
+            السبت، ٦ فبراير ٢٠٢٦
+          </p>
+          <p className="text-sm font-almarai text-muted-foreground">
+            الموافق ١٦ جمادى الثانية ١٤٤٧ هـ
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+

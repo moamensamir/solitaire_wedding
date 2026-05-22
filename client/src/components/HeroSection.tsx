@@ -1,1 +1,139 @@
-import { motion } from 'framer-motion';\n\ninterface HeroSectionProps {\n  couplePhotoUrl?: string;\n}\n\nexport default function HeroSection({ couplePhotoUrl }: HeroSectionProps) {\n  return (\n    <section className=\"relative min-h-screen flex items-center justify-center overflow-hidden\">\n      {/* Background with hero image */}\n      <div\n        className=\"absolute inset-0 z-0\"\n        style={{\n          backgroundImage: 'url(https://d2xsxph8kpxj0f.cloudfront.net/310519663632622673/L2W5gaRC8kwpTby4Q3mBRy/hero-background-ZAb5r2bUknwuPYv3wyBcgC.webp)',\n          backgroundSize: 'cover',\n          backgroundPosition: 'center',\n          backgroundAttachment: 'fixed',\n        }}\n      />\n\n      {/* Overlay gradient */}\n      <div className=\"absolute inset-0 bg-gradient-to-b from-white/40 via-white/20 to-white/40 z-10\" />\n\n      {/* Content */}\n      <div className=\"relative z-20 container max-w-4xl mx-auto px-4 py-20\">\n        <div className=\"grid md:grid-cols-2 gap-12 items-center\">\n          {/* Left side - Text content */}\n          <motion.div\n            className=\"text-right\"\n            initial={{ opacity: 0, x: 50 }}\n            whileInView={{ opacity: 1, x: 0 }}\n            transition={{ duration: 0.8 }}\n          >\n            {/* Decorative top element */}\n            <motion.div\n              className=\"mb-6 flex justify-end\"\n              animate={{ opacity: [0.3, 0.6, 0.3] }}\n              transition={{ duration: 4, repeat: Infinity }}\n            >\n              <div\n                className=\"w-16 h-16 opacity-40\"\n                style={{\n                  backgroundImage: 'url(https://d2xsxph8kpxj0f.cloudfront.net/310519663632622673/L2W5gaRC8kwpTby4Q3mBRy/gold-ornament-pattern-grePg8bPhTyuKBqFKEVMmY.webp)',\n                  backgroundSize: 'contain',\n                  backgroundRepeat: 'no-repeat',\n                }}\n              />\n            </motion.div>\n\n            {/* Main heading */}\n            <h1 className=\"text-5xl md:text-6xl font-cormorant font-bold text-accent mb-6 leading-tight\">\n              ليان و محمد\n            </h1>\n\n            {/* Subtitle */}\n            <p className=\"text-xl md:text-2xl font-almarai text-foreground mb-8 leading-relaxed\">\n              بسم الله الرحمن الرحيم\n            </p>\n\n            {/* Description */}\n            <p className=\"text-lg font-almarai text-foreground/80 mb-8 leading-relaxed\">\n              يسعدنا أن ندعوكم لحضور حفل زفافنا بكل الحب والتقدير\n            </p>\n\n            {/* Decorative line */}\n            <div className=\"w-24 h-1 bg-gradient-to-l from-accent to-transparent mb-8\" />\n\n            {/* Quote */}\n            <p className=\"text-accent text-lg font-playfair italic mb-8\">\n              \"ومن آياته أن خلق لكم من أنفسكم أزواجاً لتسكنوا إليها\"\n            </p>\n          </motion.div>\n\n          {/* Right side - Couple photo */}\n          <motion.div\n            className=\"relative\"\n            initial={{ opacity: 0, x: -50 }}\n            whileInView={{ opacity: 1, x: 0 }}\n            transition={{ duration: 0.8, delay: 0.2 }}\n          >\n            {/* Photo frame */}\n            <div className=\"relative aspect-square rounded-lg overflow-hidden shadow-2xl\">\n              {couplePhotoUrl ? (\n                <img\n                  src={couplePhotoUrl}\n                  alt=\"الزوجان\"\n                  className=\"w-full h-full object-cover\"\n                />\n              ) : (\n                <div className=\"w-full h-full bg-gradient-to-br from-secondary to-muted flex items-center justify-center\">\n                  <p className=\"text-muted-foreground text-center px-4\">صورة الزوجان</p>\n                </div>\n              )}\n\n              {/* Gold border frame effect */}\n              <div className=\"absolute inset-0 border-8 border-accent opacity-30 pointer-events-none\" />\n\n              {/* Decorative corner elements */}\n              <motion.div\n                className=\"absolute -top-4 -right-4 w-8 h-8 border-t-4 border-r-4 border-accent\"\n                animate={{ opacity: [0.3, 0.6, 0.3] }}\n                transition={{ duration: 3, repeat: Infinity }}\n              />\n              <motion.div\n                className=\"absolute -bottom-4 -left-4 w-8 h-8 border-b-4 border-l-4 border-accent\"\n                animate={{ opacity: [0.3, 0.6, 0.3] }}\n                transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}\n              />\n            </div>\n\n            {/* Floating particles around photo */}\n            {[...Array(4)].map((_, i) => (\n              <motion.div\n                key={i}\n                className=\"absolute w-2 h-2 rounded-full bg-accent\"\n                animate={{\n                  y: [0, -30, 0],\n                  x: [0, Math.cos((i * Math.PI) / 2) * 40, 0],\n                  opacity: [0, 0.6, 0],\n                }}\n                transition={{\n                  duration: 4 + i,\n                  repeat: Infinity,\n                  ease: 'easeInOut',\n                  delay: i * 0.3,\n                }}\n                style={{\n                  right: `${-20 + i * 15}%`,\n                  top: `${20 + i * 20}%`,\n                }}\n              />\n            ))}\n          </motion.div>\n        </div>\n      </div>\n    </section>\n  );\n}\n
+import { motion } from 'framer-motion';
+
+interface HeroSectionProps {
+  couplePhotoUrl?: string;
+}
+
+export default function HeroSection({ couplePhotoUrl }: HeroSectionProps) {
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background with hero image */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: 'url(https://d2xsxph8kpxj0f.cloudfront.net/310519663632622673/L2W5gaRC8kwpTby4Q3mBRy/hero-background-ZAb5r2bUknwuPYv3wyBcgC.webp)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed',
+        }}
+      />
+
+      {/* Overlay gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/20 to-white/40 z-10" />
+
+      {/* Content */}
+      <div className="relative z-20 container max-w-4xl mx-auto px-4 py-20">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          {/* Left side - Text content */}
+          <motion.div
+            className="text-right"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            {/* Decorative top element */}
+            <motion.div
+              className="mb-6 flex justify-end"
+              animate={{ opacity: [0.3, 0.6, 0.3] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            >
+              <div
+                className="w-16 h-16 opacity-40"
+                style={{
+                  backgroundImage: 'url(https://d2xsxph8kpxj0f.cloudfront.net/310519663632622673/L2W5gaRC8kwpTby4Q3mBRy/gold-ornament-pattern-grePg8bPhTyuKBqFKEVMmY.webp)',
+                  backgroundSize: 'contain',
+                  backgroundRepeat: 'no-repeat',
+                }}
+              />
+            </motion.div>
+
+            {/* Main heading */}
+            <h1 className="text-5xl md:text-6xl font-cormorant font-bold text-accent mb-6 leading-tight">
+              ليان و محمد
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-xl md:text-2xl font-almarai text-foreground mb-8 leading-relaxed">
+              بسم الله الرحمن الرحيم
+            </p>
+
+            {/* Description */}
+            <p className="text-lg font-almarai text-foreground/80 mb-8 leading-relaxed">
+              يسعدنا أن ندعوكم لحضور حفل زفافنا بكل الحب والتقدير
+            </p>
+
+            {/* Decorative line */}
+            <div className="w-24 h-1 bg-gradient-to-l from-accent to-transparent mb-8" />
+
+            {/* Quote */}
+            <p className="text-accent text-lg font-playfair italic mb-8">
+              "ومن آياته أن خلق لكم من أنفسكم أزواجاً لتسكنوا إليها"
+            </p>
+          </motion.div>
+
+          {/* Right side - Couple photo */}
+          <motion.div
+            className="relative"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            {/* Photo frame */}
+            <div className="relative aspect-square rounded-lg overflow-hidden shadow-2xl">
+              {couplePhotoUrl ? (
+                <img
+                  src={couplePhotoUrl}
+                  alt="الزوجان"
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-secondary to-muted flex items-center justify-center">
+                  <p className="text-muted-foreground text-center px-4">صورة الزوجان</p>
+                </div>
+              )}
+
+              {/* Gold border frame effect */}
+              <div className="absolute inset-0 border-8 border-accent opacity-30 pointer-events-none" />
+
+              {/* Decorative corner elements */}
+              <motion.div
+                className="absolute -top-4 -right-4 w-8 h-8 border-t-4 border-r-4 border-accent"
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              />
+              <motion.div
+                className="absolute -bottom-4 -left-4 w-8 h-8 border-b-4 border-l-4 border-accent"
+                animate={{ opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+              />
+            </div>
+
+            {/* Floating particles around photo */}
+            {[...Array(4)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 rounded-full bg-accent"
+                animate={{
+                  y: [0, -30, 0],
+                  x: [0, Math.cos((i * Math.PI) / 2) * 40, 0],
+                  opacity: [0, 0.6, 0],
+                }}
+                transition={{
+                  duration: 4 + i,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                  delay: i * 0.3,
+                }}
+                style={{
+                  right: `${-20 + i * 15}%`,
+                  top: `${20 + i * 20}%`,
+                }}
+              />
+            ))}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
